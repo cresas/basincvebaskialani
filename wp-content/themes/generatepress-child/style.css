@@ -1,0 +1,8 @@
+/*
+Theme Name: generatepress-child
+Template: generatepress
+
+script.js 내부의 Header Sticky를 주석으로 처리하여 비활성화 하기
+*/
+@import url( "../generatepress/style.css" );
+

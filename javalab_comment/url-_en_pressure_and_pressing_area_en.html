@@ -1,0 +1,48 @@
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style>
+	label {
+		width: 118px;
+	    height: 38px;
+		//font-size: 20px; 
+		border: 1px solid #cccccc;
+        display: flex;              /* flex or inline-flex  설정 */
+        justify-content: center;    /* 가로(수평) 방향 중앙을 설정 */
+        align-items: center;        /* 세로(수직) 방향 중앙을 설정 */
+		background: #eee;
+		margin: 0;
+		padding: 8px 0;
+		border-radius: 2px;	
+	}
+	label:hover {
+		font-size: inherit;
+		font-weight: inherit;
+		background-color: gray;
+		color: white;
+	}
+</style>
+</head>
+<body style='margin: 0;'>
+	<script>
+		function check_form()
+		{
+			let txt = prompt('콘텐츠에 대한 조언이나 업데이트 요청을 입력\nコンテンツに関するアドバイスや更新リクエストを入力\nEnter advice or update requests about this content', '');
+			if(txt){
+				document.getElementById('txt').value = txt;
+				return true;
+			} 
+			else return false;
+		}
+	</script>
+	<label for="submitButton" style="cursor:pointer;">Comment 💬</label>
+	<form id='javalab_comment_form' action='../index.html' method='POST' onsubmit="return check_form();">
+		<input type='hidden' name='action' value='javalab_comment'>
+		<input type='hidden' name='ip' value='130.44.201.93'>
+		<input type='hidden' name='url' value='/en/pressure_and_pressing_area_en/'>
+		<input type='hidden' name='txt' id='txt'>
+		<input type="submit" id="submitButton" style="display: none;">
+	</form>
+</body>
+</html>
