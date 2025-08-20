@@ -32,19 +32,46 @@ function fullscreenchanged(event)
   }
 }
 
-function doFullScreen()
-{
-  fullscreenchanged();
+function fullscreenchanged() {
+    // Canvas boyutunu yeniden ayarla
+    if (typeof windowResized === 'function') {
+        windowResized();
+    }
+}
 
-  var canvas = document.getElementById("divFull");
-  if(canvas.requestFullScreen) canvas.requestFullScreen();
-  else if(canvas.webkitRequestFullScreen) canvas.webkitRequestFullScreen();
-  else if(canvas.mozRequestFullScreen) canvas.mozRequestFullScreen();
+// Toggle özellikli tam ekran fonksiyonu (kullanıcının orijinal kodunu temel alarak)
+function doFullScreen() {
+    // Eğer tam ekran modundaysak, tam ekrandan çık
+    if (document.fullscreenElement || document.webkitFullscreenElement || 
+        document.mozFullScreenElement || document.msFullscreenElement) {
+        
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    } else {
+        // Tam ekran modunda değilsek, kullanıcının orijinal kodunu kullanarak tam ekrana geç
+        fullscreenchanged();
 
-  canvas.addEventListener("fullscreenchange", fullscreenchanged);
-  canvas.addEventListener("msfullscreenchange", fullscreenchanged);
-  canvas.addEventListener("webkitfullscreenchange", fullscreenchanged);
-  canvas.addEventListener("mozfullscreenchange", fullscreenchanged);
+        var canvas = document.getElementById("divFull");
+        if(canvas.requestFullScreen) canvas.requestFullScreen();
+        else if(canvas.webkitRequestFullScreen) canvas.webkitRequestFullScreen();
+        else if(canvas.mozRequestFullScreen) canvas.mozRequestFullScreen();
+
+        // Event listener'ları sadece bir kez ekle
+        if (!canvas.hasAttribute('data-fullscreen-listeners')) {
+            canvas.addEventListener("fullscreenchange", fullscreenchanged);
+            canvas.addEventListener("msfullscreenchange", fullscreenchanged);
+            canvas.addEventListener("webkitfullscreenchange", fullscreenchanged);
+            canvas.addEventListener("mozfullscreenchange", fullscreenchanged);
+            canvas.setAttribute('data-fullscreen-listeners', 'true');
+        }
+    }
 }
 
 function drawButtonDrag()
